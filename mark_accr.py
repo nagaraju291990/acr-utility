@@ -4,12 +4,12 @@ import sys
 import re
 
 #open file using open file mode
-fp1 = open(sys.argv[1]) # Open file on read mode -- input file
+fp1 = open(sys.argv[2]) # Open file on read mode -- input file
 lines = fp1.read().split("\n") # Create a list containing all lines
 fp1.close() # Close file
 
 
-fp2 = open(sys.argv[2]) # Open file on read mode -- tab seperated list file
+fp2 = open(sys.argv[1]) # Open file on read mode -- tab seperated list file
 words = fp2.read().split("\n") # Create a list containing all lines
 fp2.close() # Close file
 
@@ -30,6 +30,7 @@ for word in words:
 		t1t2t3 = word.split("\t")[1]	#contians(((T1|T2|T3)))
 		t123 = t1t2t3
 		t123 = re.sub(r'\(\(|\)\)', '', t123)
+		t123 = re.sub(r'.*\|', '|', t123)
 		#print(t123)
 		tsl = t123.split("|")
 		for terms in tsl:
@@ -210,7 +211,8 @@ for line in lines:
 				#print("iam4 :",line, key)
 		line = re.sub(r'2replaced###already', "", line, flags=re.IGNORECASE|re.MULTILINE)
 		line = re.sub(r'replaced###already', " ", line, flags=re.IGNORECASE|re.MULTILINE)
-		#line = re.sub(r"piped###already", "|", line, flags = re.IGNORECASE|re.MULTILINE)
+		line = re.sub(r"\(\[\[", "[[", line, flags = re.IGNORECASE|re.MULTILINE)
+		line = re.sub(r"\]\]\)", "]]", line, flags = re.IGNORECASE|re.MULTILINE)
 		print(line)
 	else:
 		print(line)
